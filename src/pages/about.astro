@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactLinks from '../components/ContactLinks.astro';
+import Prose from '../components/Prose.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { Content } from '../data/about.md';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title={`About · ${site.name}`}
+  description={`About ${site.name}: background, what I'm aiming for, skills and resume.`}
+>
+  <header class="section section--dark band">
+    <div class="container">
+      <h1>About</h1>
+    </div>
+  </header>
+
+  <div class="section section--light">
+    <div class="container body">
+      <Prose>
+        <Content />
+      </Prose>
+
+      <section aria-labelledby="skills-heading">
+        <h2 id="skills-heading">Skills</h2>
+        <dl>
+          {
+            Object.entries(site.skills).map(([group, items]) => (
+              <div>
+                <dt>{group}</dt>
+                <dd>
+                  <ul>
+                    {items.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+    </div>
+  </div>
+
+  <section class="section section--dark" aria-labelledby="contact-heading">
+    <div class="container">
+      <SectionHeading id="contact-heading" title="Get in touch" />
+      <ContactLinks />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .band {
+    padding-block: 56px;
+  }
+
+  .body {
+    display: grid;
+    gap: 56px;
+  }
+
+  dl {
+    display: grid;
+    gap: 24px;
+    max-width: var(--prose-width);
+    margin-top: 24px;
+  }
+
+  dt {
+    font-weight: 700;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 0 12px;
+    line-height: 30px;
+    color: var(--color-muted-on-light);
+    border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+    border-radius: var(--radius-pill);
+  }
+
+  @media (min-width: 768px) {
+    .body {
+      gap: 80px;
+    }
+  }
+</style>
