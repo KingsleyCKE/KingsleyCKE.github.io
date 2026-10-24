@@ -1,0 +1,45 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SkipLink from '../components/SkipLink.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  theme?: 'dark' | 'light';
+}
+
+const { title, description, ogImage, theme = 'dark' } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} ogImage={ogImage} />
+  </head>
+  <body data-theme={theme}>
+    <SkipLink />
+    <SiteHeader />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  body[data-theme='light'] {
+    color: var(--color-text-on-light);
+    background-color: var(--color-bg-light);
+  }
+
+  main {
+    flex: 1;
+  }
+</style>

@@ -1,35 +1,24 @@
 ---
-// Temporary step 2 test page. Font and CSS imports move to BaseHead in step 3.
-import '@fontsource/raleway/800.css';
-import '@fontsource/ibm-plex-mono/400.css';
-import '@fontsource/ibm-plex-mono/600.css';
-import '@fontsource/ibm-plex-mono/700.css';
-import '../styles/global.css';
+// Temporary test page. Replaced by the real homepage in step 5.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Chikezie Ekejiuba</title>
-  </head>
-  <body>
-    <main class="section section--dark">
-      <div class="container">
-        <h1>Heading 1 in Raleway 800</h1>
-        <h2>Heading 2 in Raleway 800</h2>
-        <h3>Heading 3 in Raleway 800</h3>
-        <p>Body text in IBM Plex Mono 400.</p>
-        <p><b>Body text in IBM Plex Mono 700.</b></p>
-      </div>
-    </main>
-    <section class="section section--light">
-      <div class="container">
-        <h2>Light section</h2>
-        <p>Body text on the light surface.</p>
-        <p><a href="/">A focusable link</a></p>
-      </div>
-    </section>
-  </body>
-</html>
+<BaseLayout title={site.title} description={site.intro}>
+  <div class="section section--dark">
+    <div class="container">
+      <h1>Heading 1 in Raleway 800</h1>
+      <h2>Heading 2 in Raleway 800</h2>
+      <h3>Heading 3 in Raleway 800</h3>
+      <p>Body text in IBM Plex Mono 400.</p>
+      <p><b>Body text in IBM Plex Mono 700.</b></p>
+    </div>
+  </div>
+  <section class="section section--light">
+    <div class="container">
+      <h2>Light section</h2>
+      <p>Body text on the light surface.</p>
+      <p><a href="/">A focusable link</a></p>
+    </div>
+  </section>
+</BaseLayout>

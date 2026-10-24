@@ -1,0 +1,129 @@
+---
+import { linkedinUrl, site } from '../data/site';
+import GitHub from './icons/GitHub.astro';
+import LinkedIn from './icons/LinkedIn.astro';
+import Mail from './icons/Mail.astro';
+
+const path = Astro.url.pathname;
+
+function currentState(link: (typeof site.nav)[number]): 'page' | 'true' | undefined {
+  if (path === link.href) return 'page';
+  if ('section' in link && path.startsWith(link.section)) return 'true';
+  return undefined;
+}
+---
+
+<header class="site-header">
+  <div class="bar">
+    <div class="inner">
+      <nav aria-label="Main">
+        <ul class="nav-list">
+          {
+            site.nav.map((link) => (
+              <li>
+                <a href={link.href} aria-current={currentState(link)}>
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <ul class="social">
+        <li>
+          <a href={site.github} aria-label="GitHub"><GitHub /></a>
+        </li>
+        {
+          linkedinUrl && (
+            <li>
+              <a href={linkedinUrl} aria-label="LinkedIn">
+                <LinkedIn />
+              </a>
+            </li>
+          )
+        }
+        <li>
+          <a href={`mailto:${site.email}`} aria-label="Email"><Mail /></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<style>
+  .bar {
+    max-width: var(--container-nav);
+    margin-inline: auto;
+    color: var(--color-text-on-dark);
+    background-color: var(--color-surface-dark);
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+  }
+
+  .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--container);
+    min-height: 56px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-list {
+    gap: 20px;
+  }
+
+  .nav-list a {
+    display: block;
+    padding-block: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+
+  .nav-list a:hover {
+    text-decoration-line: underline;
+  }
+
+  .nav-list a[aria-current] {
+    text-decoration-line: underline;
+    text-decoration-color: var(--color-primary-border);
+  }
+
+  .social {
+    display: none;
+    gap: 24px;
+  }
+
+  .social a {
+    display: block;
+    padding: 4px;
+  }
+
+  .social a:hover {
+    color: var(--color-primary-border);
+  }
+
+  @media (min-width: 768px) {
+    .inner {
+      min-height: 70px;
+    }
+
+    .nav-list {
+      gap: 64px;
+    }
+
+    .social {
+      display: flex;
+    }
+  }
+</style>
