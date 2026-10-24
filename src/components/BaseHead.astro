@@ -13,8 +13,8 @@ interface Props {
 
 const { title, description, ogImage } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-// Step 8 adds the /og-default.png fallback
-const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : undefined;
+// Link previews need an absolute URL. Pages without their own image use the site default
+const ogImageURL = new URL(ogImage ?? '/og-default.png', Astro.site);
 ---
 
 <meta charset="utf-8" />
@@ -28,5 +28,5 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : undefined;
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalURL} />
-{ogImageURL && <meta property="og:image" content={ogImageURL} />}
+<meta property="og:image" content={ogImageURL} />
 <meta name="twitter:card" content="summary_large_image" />
