@@ -1,0 +1,39 @@
+---
+interface Props {
+  // Set on the <h2> so the parent <section> can use aria-labelledby
+  id: string;
+  title: string;
+  subtext?: string;
+}
+
+const { id, title, subtext } = Astro.props;
+---
+
+<div class="section-heading">
+  <h2 id={id}>{title}</h2>
+  {subtext && <p>{subtext}</p>}
+</div>
+
+<style>
+  .section-heading {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  p {
+    max-width: 570px;
+    margin: 10px auto 0;
+    color: var(--color-muted-on-dark);
+    text-wrap: balance;
+  }
+
+  :global(.section--light) p {
+    color: var(--color-muted-on-light);
+  }
+
+  @media (min-width: 768px) {
+    .section-heading {
+      margin-bottom: 60px;
+    }
+  }
+</style>

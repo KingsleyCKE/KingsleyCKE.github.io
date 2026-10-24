@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import profile from '../assets/profile.jpg';
+import { site } from '../data/site';
+import ButtonLink from './ButtonLink.astro';
+import ExperienceLine from './ExperienceLine.astro';
+---
+
+<section class="hero section section--dark" aria-labelledby="hero-heading">
+  <div class="container">
+    <div class="intro">
+      <div>
+        <h1 id="hero-heading">{site.name}</h1>
+        <p class="lede">{site.intro}</p>
+        <div class="actions">
+          <ButtonLink href="/#projects" label="See my projects" size="large" />
+          <a class="resume" href={site.resume}>Resume (PDF)</a>
+        </div>
+      </div>
+      <Image
+        class="photo"
+        src={profile}
+        alt={`Photo of ${site.name}`}
+        widths={[200, 350, 400, 700]}
+        sizes="(min-width: 768px) 350px, 200px"
+        loading="eager"
+      />
+    </div>
+    <ExperienceLine />
+  </div>
+</section>
+
+<style>
+  .container {
+    display: grid;
+    gap: 48px;
+  }
+
+  .intro {
+    display: grid;
+    gap: 32px;
+  }
+
+  .lede {
+    max-width: 492px;
+    margin-top: 10px;
+    color: var(--color-muted-on-dark);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px 32px;
+    margin-top: 30px;
+  }
+
+  .resume {
+    font-weight: 700;
+  }
+
+  .photo {
+    order: -1;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      gap: 56px;
+    }
+
+    .intro {
+      grid-template-columns: minmax(0, 1fr) clamp(240px, 35vw, 350px);
+      align-items: center;
+    }
+
+    .photo {
+      order: 0;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1;
+    }
+  }
+</style>

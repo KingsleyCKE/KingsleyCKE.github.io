@@ -1,24 +1,54 @@
 ---
-// Temporary test page. Replaced by the real homepage in step 5.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactLinks from '../components/ContactLinks.astro';
+import Hero from '../components/Hero.astro';
+import ProjectRow from '../components/ProjectRow.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 import { site } from '../data/site';
+import { getProjects } from '../lib/content';
+
+const projects = await getProjects();
 ---
 
 <BaseLayout title={site.title} description={site.intro}>
-  <div class="section section--dark">
+  <Hero />
+
+  <section id="projects" class="section section--light" aria-labelledby="projects-heading">
     <div class="container">
-      <h1>Heading 1 in Raleway 800</h1>
-      <h2>Heading 2 in Raleway 800</h2>
-      <h3>Heading 3 in Raleway 800</h3>
-      <p>Body text in IBM Plex Mono 400.</p>
-      <p><b>Body text in IBM Plex Mono 700.</b></p>
+      <SectionHeading
+        id="projects-heading"
+        title="Projects"
+        subtext="Case studies of what I've built: the problem, the decisions and what broke along the way."
+      />
+      <div class="project-list">
+        {projects.map((project, index) => <ProjectRow project={project} index={index} />)}
+      </div>
     </div>
-  </div>
-  <section class="section section--light">
+  </section>
+
+  {/* Step 11 adds the #log section here */}
+
+  <section id="contact" class="section section--dark" aria-labelledby="contact-heading">
     <div class="container">
-      <h2>Light section</h2>
-      <p>Body text on the light surface.</p>
-      <p><a href="/">A focusable link</a></p>
+      <SectionHeading
+        id="contact-heading"
+        title="Get in touch"
+        subtext="Email me, read my code on GitHub or download my resume."
+      />
+      <ContactLinks />
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .project-list {
+    display: grid;
+    gap: 56px;
+  }
+
+  @media (min-width: 768px) {
+    .project-list {
+      gap: 80px;
+    }
+  }
+</style>

@@ -93,6 +93,12 @@ a {
   outline-offset: 2px;
 }
 
+/* The border green is under 3:1 on white, so light surfaces use the darker primary */
+.section--light :focus-visible,
+[data-theme='light'] :focus-visible {
+  outline-color: var(--color-primary);
+}
+
 /* Layout */
 .container {
   max-width: var(--container);

@@ -1,0 +1,36 @@
+---
+interface Props {
+  label: string;
+  accent: 'orange' | 'blue' | 'teal';
+}
+
+const { label, accent } = Astro.props;
+---
+
+<span class={`tag tag--${accent}`}>{label}</span>
+
+<style>
+  .tag {
+    display: inline-block;
+    padding: 0 10px;
+    font-size: var(--fs-small);
+    font-weight: 700;
+    line-height: 24px;
+    border-radius: var(--radius-pill);
+  }
+
+  .tag--orange {
+    color: var(--accent-orange-ink);
+    background-color: var(--accent-orange-tint);
+  }
+
+  .tag--blue {
+    color: var(--accent-blue-ink);
+    background-color: var(--accent-blue-tint);
+  }
+
+  .tag--teal {
+    color: var(--accent-teal-ink);
+    background-color: var(--accent-teal-tint);
+  }
+</style>

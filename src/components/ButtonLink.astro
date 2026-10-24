@@ -1,0 +1,63 @@
+---
+import Chevron from './icons/Chevron.astro';
+
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'primary' | 'orange' | 'blue' | 'teal';
+  // `large` is the hero call to action
+  size?: 'default' | 'large';
+}
+
+const { href, label, variant = 'primary', size = 'default' } = Astro.props;
+---
+
+<a class:list={['button', `button--${variant}`, { 'button--large': size === 'large' }]} href={href}>
+  {label}<Chevron />
+</a>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    font-size: var(--fs-body);
+    font-weight: 700;
+    line-height: 1.3;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-button);
+  }
+
+  .button:hover {
+    filter: brightness(1.1);
+  }
+
+  .button--large {
+    padding: 21px 64px;
+    font-size: var(--fs-prose);
+  }
+
+  .button--primary {
+    color: var(--color-text-on-dark);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary-border);
+    box-shadow: var(--shadow-primary);
+  }
+
+  .button--orange {
+    color: var(--accent-orange-on);
+    background-color: var(--accent-orange-bg);
+  }
+
+  .button--blue {
+    color: var(--accent-blue-on);
+    background-color: var(--accent-blue-bg);
+  }
+
+  .button--teal {
+    color: var(--accent-teal-on);
+    background-color: var(--accent-teal-bg);
+  }
+</style>

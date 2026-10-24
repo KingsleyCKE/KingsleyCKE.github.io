@@ -1,0 +1,38 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="experience">
+  <p class="label" id="experience-label">Experience</p>
+  <ul aria-labelledby="experience-label">
+    {site.experience.map((item) => <li>{item}</li>)}
+  </ul>
+</div>
+
+<style>
+  .label {
+    font-weight: 600;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    padding: 8px 16px;
+    font-weight: 600;
+    color: var(--color-muted-on-dark);
+    text-align: center;
+    border: 1px solid var(--color-surface-dark);
+    border-radius: var(--radius-card);
+  }
+</style>

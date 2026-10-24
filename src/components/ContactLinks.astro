@@ -1,0 +1,71 @@
+---
+import { linkedinUrl, site } from '../data/site';
+import ButtonLink from './ButtonLink.astro';
+import GitHub from './icons/GitHub.astro';
+import LinkedIn from './icons/LinkedIn.astro';
+import Mail from './icons/Mail.astro';
+
+// "https://github.com/KingsleyCKE" → "github.com/KingsleyCKE"
+const display = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+---
+
+<div class="contact-links">
+  <ul>
+    <li>
+      <a href={`mailto:${site.email}`}><Mail size={22} /><span>{site.email}</span></a>
+    </li>
+    <li>
+      <a href={site.github}><GitHub size={22} /><span>{display(site.github)}</span></a>
+    </li>
+    {
+      linkedinUrl && (
+        <li>
+          <a href={linkedinUrl}>
+            <LinkedIn size={22} />
+            <span>{display(linkedinUrl)}</span>
+          </a>
+        </li>
+      )
+    }
+  </ul>
+  <ButtonLink href={site.resume} label="Resume (PDF)" />
+</div>
+
+<style>
+  .contact-links {
+    display: grid;
+    justify-items: center;
+    gap: 32px;
+    max-width: 350px;
+    margin-inline: auto;
+  }
+
+  ul {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    font-size: var(--fs-prose);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+    border-radius: var(--radius-button);
+  }
+
+  a:hover {
+    border-color: var(--color-primary-border);
+  }
+
+  span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+</style>

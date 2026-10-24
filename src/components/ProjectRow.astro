@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import ButtonLink from './ButtonLink.astro';
+import Tag from './Tag.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  // Even rows put the text left and the image right; odd rows flip
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { title, summary, tag, accent, cover, coverAlt, draft } = project.data;
+---
+
+<article class:list={['row', { 'row--flip': index % 2 === 1 }]}>
+  <div>
+    <div class="labels">
+      <Tag label={tag} accent={accent} />
+      {draft && <span class="draft">Draft</span>}
+    </div>
+    <h3>{title}</h3>
+    <p>{summary}</p>
+    <ButtonLink href={`/projects/${project.id}/`} label="View case study" variant={accent} />
+  </div>
+  <Image
+    class="cover"
+    src={cover}
+    alt={coverAlt}
+    widths={[445, 890]}
+    sizes="(min-width: 768px) 445px, calc(100vw - 32px)"
+  />
+</article>
+
+<style>
+  .row {
+    display: grid;
+    gap: 24px;
+  }
+
+  .labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .draft {
+    padding: 0 10px;
+    font-size: var(--fs-small);
+    font-weight: 700;
+    line-height: 22px;
+    color: var(--color-muted-on-light);
+    border: 1px dashed currentColor;
+    border-radius: var(--radius-pill);
+  }
+
+  h3 {
+    margin-top: 20px;
+  }
+
+  p {
+    margin-block: 10px 30px;
+    color: var(--color-muted-on-light);
+  }
+
+  .cover {
+    order: -1;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius-card);
+  }
+
+  @media (min-width: 768px) {
+    .row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 445px);
+      align-items: center;
+      gap: 32px;
+    }
+
+    .row--flip {
+      grid-template-columns: minmax(0, 445px) minmax(0, 1fr);
+    }
+
+    .cover {
+      order: 0;
+      aspect-ratio: 445 / 300;
+    }
+
+    .row--flip .cover {
+      order: -1;
+    }
+  }
+</style>
