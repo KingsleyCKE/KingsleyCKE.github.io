@@ -1,4 +1,10 @@
 ---
+// Temporary step 2 test page. Font and CSS imports move to BaseHead in step 3.
+import '@fontsource/raleway/800.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import '@fontsource/ibm-plex-mono/700.css';
+import '../styles/global.css';
 ---
 
 <html lang="en">
@@ -8,5 +14,22 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Chikezie Ekejiuba</title>
   </head>
-  <body></body>
+  <body>
+    <main class="section section--dark">
+      <div class="container">
+        <h1>Heading 1 in Raleway 800</h1>
+        <h2>Heading 2 in Raleway 800</h2>
+        <h3>Heading 3 in Raleway 800</h3>
+        <p>Body text in IBM Plex Mono 400.</p>
+        <p><b>Body text in IBM Plex Mono 700.</b></p>
+      </div>
+    </main>
+    <section class="section section--light">
+      <div class="container">
+        <h2>Light section</h2>
+        <p>Body text on the light surface.</p>
+        <p><a href="/">A focusable link</a></p>
+      </div>
+    </section>
+  </body>
 </html>

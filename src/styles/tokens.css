@@ -1,0 +1,51 @@
+:root {
+  /* Surfaces */
+  --color-bg-dark: #080808;
+  --color-bg-light: #ffffff;
+  --color-surface-dark: #1b1b1b;      /* nav bar, footer, card borders on dark */
+
+  /* Text */
+  --color-text-on-dark: #ffffff;
+  --color-muted-on-dark: #9c9c9c;     /* 7.3:1 on #080808 */
+  --color-text-on-light: #080808;
+  --color-muted-on-light: #666666;    /* template used #9c9c9c (2.75:1, fails) */
+
+  /* Primary (green) */
+  --color-primary: #3b8500;           /* template #3f8e00 gave 4.13:1 with white; adjusted to 4.62:1 */
+  --color-primary-border: #62ba1b;
+  --shadow-primary: 0 8px 15px rgba(63, 142, 0, 0.5);
+
+  /* Project accents: bg = button fill, on = button text, tint = tag bg, ink = tag text */
+  --accent-orange-bg: #ffa217;  --accent-orange-on: #080808;  --accent-orange-tint: #fff6e9;  --accent-orange-ink: #9b620e;
+  --accent-blue-bg:   #000aff;  --accent-blue-on:   #ffffff;  --accent-blue-tint:   #d0e6ff;  --accent-blue-ink:   #000aff;
+  --accent-teal-bg:   #2ab090;  --accent-teal-on:   #080808;  --accent-teal-tint:   #e0fff8;  --accent-teal-ink:   #1e7e67;
+
+  /* Type */
+  --font-heading: 'Raleway', system-ui, sans-serif;          /* weight 800 only */
+  --font-body: 'IBM Plex Mono', ui-monospace, monospace;     /* 400, 600, 700 */
+  --fs-h1: clamp(2rem, 1.4rem + 2.6vw, 2.75rem);             /* 32 → 44px */
+  --fs-h2: clamp(1.625rem, 1.3rem + 1.4vw, 2.125rem);        /* 26 → 34px */
+  --fs-h3: 1.5rem;                                           /* 24px */
+  --fs-body: 0.875rem;                                       /* 14px */
+  --fs-prose: 1rem;                                          /* 16px for long-form case study / log text */
+  --fs-small: 0.75rem;                                       /* 12px, tags and labels */
+  --lh-body: 1.714;                                          /* 24px on 14px */
+  --lh-prose: 1.7;
+  --tracking-body: 0.01em;
+
+  /* Shape & layout */
+  --radius-button: 4px;
+  --radius-card: 6px;
+  --radius-pill: 60px;
+  --container: 920px;        /* section content width */
+  --container-nav: 1110px;   /* header bar width */
+  --gutter: 16px;            /* side padding below 768px */
+  --section-pad: 80px;       /* vertical; 56px below 768px */
+  --prose-width: 68ch;
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --section-pad: 56px;
+  }
+}
