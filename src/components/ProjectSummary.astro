@@ -1,0 +1,89 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ButtonLink from './ButtonLink.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { role, stack, status, links, accent } = Astro.props.project.data;
+
+// Only links set in frontmatter get a button
+const buttons = [
+  { href: links.live, label: 'Live site' },
+  { href: links.demo, label: 'Try the demo' },
+  { href: links.repo, label: 'View code' },
+].filter((link): link is { href: string; label: string } => Boolean(link.href));
+---
+
+<div class="project-summary">
+  <dl>
+    <div>
+      <dt>Role</dt>
+      <dd>{role}</dd>
+    </div>
+    <div>
+      <dt>Stack</dt>
+      <dd>{stack.join(', ')}</dd>
+    </div>
+    <div>
+      <dt>Status</dt>
+      <dd>{status === 'live' ? 'Live' : 'In progress'}</dd>
+    </div>
+  </dl>
+  {
+    buttons.length > 0 && (
+      <ul>
+        {buttons.map((button) => (
+          <li>
+            <ButtonLink href={button.href} label={button.label} variant={accent} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</div>
+
+<style>
+  .project-summary {
+    display: grid;
+    gap: 24px;
+    padding: 24px;
+    background-color: var(--color-surface-dark);
+    border-radius: var(--radius-card);
+  }
+
+  dl {
+    display: grid;
+    gap: 16px;
+  }
+
+  dt {
+    font-size: var(--fs-small);
+    font-weight: 700;
+    color: var(--color-muted-on-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 768px) {
+    .project-summary {
+      padding: 32px;
+    }
+
+    dl > div {
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr);
+      gap: 24px;
+      align-items: baseline;
+    }
+  }
+</style>

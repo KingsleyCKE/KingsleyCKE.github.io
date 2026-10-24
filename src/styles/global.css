@@ -121,6 +121,22 @@ a {
 }
 
 /* Utilities */
+
+/* Dev-only marker on draft entries, sized to sit next to a Tag */
+.draft-label {
+  padding: 0 10px;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 22px;
+  color: var(--color-muted-on-dark);
+  border: 1px dashed currentColor;
+  border-radius: var(--radius-pill);
+}
+
+.section--light .draft-label {
+  color: var(--color-muted-on-light);
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

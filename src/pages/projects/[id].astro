@@ -1,0 +1,98 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectSummary from '../../components/ProjectSummary.astro';
+import Prose from '../../components/Prose.astro';
+import Tag from '../../components/Tag.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import { site } from '../../data/site';
+import { getProjects } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, summary, tag, accent, cover, coverAlt, video, draft } = project.data;
+const { Content } = await render(project);
+// Link previews use 1200×630. JPEG because not every unfurler reads WebP
+const ogImage = await getImage({ src: cover, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+---
+
+<BaseLayout title={`${title} · ${site.name}`} description={summary} ogImage={ogImage.src}>
+  <article>
+    <header class="section section--dark band">
+      <div class="container">
+        <div class="labels">
+          <Tag label={tag} accent={accent} />
+          {draft && <span class="draft-label">Draft</span>}
+        </div>
+        <h1>{title}</h1>
+        <p class="summary">{summary}</p>
+        <ProjectSummary project={project} />
+      </div>
+    </header>
+
+    <div class="section section--light">
+      <div class="container body">
+        <Image
+          class="cover"
+          src={cover}
+          alt={coverAlt}
+          widths={[600, 900, 1200]}
+          sizes="(min-width: 920px) 888px, calc(100vw - 32px)"
+          loading="eager"
+        />
+        {video && <VideoEmbed youtubeId={video.youtubeId} title={video.title} />}
+        <Prose>
+          <Content />
+        </Prose>
+      </div>
+    </div>
+
+    {/* Step 11 adds the "Build log for this project" section here */}
+  </article>
+</BaseLayout>
+
+<style>
+  .labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  h1 {
+    margin-top: 16px;
+  }
+
+  .summary {
+    max-width: var(--prose-width);
+    margin-block: 12px 32px;
+    font-size: var(--fs-prose);
+    color: var(--color-muted-on-dark);
+  }
+
+  .body {
+    display: grid;
+    gap: 40px;
+  }
+
+  .cover {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius-card);
+  }
+
+  @media (min-width: 768px) {
+    .body {
+      gap: 56px;
+    }
+  }
+</style>
